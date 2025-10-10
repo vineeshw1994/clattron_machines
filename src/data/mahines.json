@@ -1,0 +1,326 @@
+[
+  {
+    "id": 1,
+    "name": "CNC Lathe Pro",
+    "category": "cnc",
+    "description": "High-precision lathe for industrial manufacturing. Ideal for turning operations with advanced control systems.",
+    "specs": "5000 RPM, 10kW motor, 0.01mm precision",
+    "image": "https://www.tramarindustries.com/wp-content/uploads/2020/04/Picture1.png",
+    "alt": "CNC Lathe Pro in operation"
+  },
+  {
+    "id": 2,
+    "name": "CNC Mill Ultra",
+    "category": "cnc",
+    "description": "Versatile milling machine for complex parts. Features high-speed spindles and multi-axis control.",
+    "specs": "8000 RPM, 15kW motor, 0.005mm precision",
+    "image": "https://imgs.search.brave.com/T929YLc74E2ofi6tturxgWowJ_FbsEkNvZukPW2P2mk/rs:fit:500:0:1:0/g:ce/aHR0cHM6Ly91cy4x/MjNyZi5jb20vNDUw/d20vYWxleDAxMTk3/My9hbGV4MDExOTcz/MTgwMS9hbGV4MDEx/OTczMTgwMTAwMDYz/LzkzMDI0OTQ0LWNu/Yy1taWxsaW5nLW1h/Y2hpbmUtd29ya2lu/Zy1jdXR0aW5nLW1l/dGFsd29yay1wcm9j/ZXNzLW1pbGxpbmct/bWFjaGluZS13b3Jr/aW5nLW9uLXN0ZWVs/LWRldGFpbC5qcGc_/dmVyPTY",
+    "alt": "CNC Mill Ultra milling steel"
+  },
+  {
+    "id": 3,
+    "name": "CNC Router X",
+    "category": "cnc",
+    "description": "Robust router for cutting wood, composites, and metals with precision.",
+    "specs": "12000 RPM, 7.5kW motor, 0.02mm accuracy",
+    "image": "https://imgs.search.brave.com/hY8ZRCXF9YbI5L85N1H4YE2qgcr_d5E8VQnq_1zjGMs/rs:fit:500:0:1:0/g:ce/aHR0cHM6Ly9tZWRp/YS5nZXR0eWltYWdl/cy5jb20vaWQvNjI3/NDk4NDQ2L3Bob3Rv/L3dpcmUtY3V0LW1h/Y2hpbmUtY3V0dGlu/Zy5qcGc_cz02MTJ4/NjEyJnc9MCZrPTIw/JmM9ZGpOMmpJNmRu/YXBtWV9RQnpZNk9N/ZFBFTGExaXozdHhP/MkxTNHdTMTBPOD0",
+    "alt": "CNC Router X cutting materials"
+  },
+  {
+    "id": 4,
+    "name": "CNC Plasma Pro",
+    "category": "cnc",
+    "description": "Advanced plasma cutting for metal fabrication with high accuracy.",
+    "specs": "6000 RPM, 12kW motor, 0.01mm precision",
+    "image": "https://imgs.search.brave.com/s5S4dJkUw-KPbvYIr9X98wxddXPQZE9PTqx1Qmk503k/rs:fit:500:0:1:0/g:ce/aHR0cHM6Ly90aHVt/YnMuZHJlYW1zdGlt/ZS5jb20vYi9jbmMt/bWFjaGluZS05NDcw/MTQxLmpwZw",
+    "alt": "CNC Plasma Pro cutting metal"
+  },
+  {
+    "id": 5,
+    "name": "CNC Turning Center",
+    "category": "cnc",
+    "description": "Multi-axis turning center for high-volume production.",
+    "specs": "4500 RPM, 20kW motor, 0.008mm precision",
+    "image": "https://imgs.search.brave.com/GsIbalm2okNOl_NeD743F16EGWdQ8dTX3yT1uM3F5O8/rs:fit:500:0:1:0/g:ce/aHR0cHM6Ly90NC5m/dGNkbi5uZXQvanBn/LzAyLzExLzQ3Lzgz/LzM2MF9GXzIxMTQ3/ODM1N19IT3Y3UW50/MTVLZ0QxaHNVd3Fo/NnlPMll3NmR0QXZF/SS5qcGc",
+    "alt": "CNC Turning Center in production"
+  },
+  {
+    "id": 6,
+    "name": "CNC Grinder Elite",
+    "category": "cnc",
+    "description": "Precision grinder for finishing complex surfaces.",
+    "specs": "3000 RPM, 8kW motor, 0.002mm precision",
+    "image": "https://imgs.search.brave.com/AhXT4EqufRzQBu0qV59m-WJSdCKj9zZOdkITBQXp-3k/rs:fit:500:0:1:0/g:ce/aHR0cHM6Ly90My5m/dGNkbi5uZXQvanBn/LzAyLzA5LzMwLzM4/LzM2MF9GXzIwOTMw/MzgyM19NOGlqaUJQ/N2xhVE1peVVkQW91/S0xmMXU2eUZHcE1M/MS5qcGc",
+    "alt": "CNC Grinder Elite finishing surfaces"
+  },
+  {
+    "id": 7,
+    "name": "3D Printer X1",
+    "category": "3d",
+    "description": "Advanced 3D printing for rapid prototyping. Supports multiple materials and high-resolution prints.",
+    "specs": "300x300x300mm build volume, 0.1mm resolution, Wi-Fi connectivity",
+    "image": "https://i5.walmartimages.com/seo/EasyThreed-3D-Printer-Mini-Desktop-Printing-Machine-for-Beginners-Household-Education-Black_4e3c7db3-713f-404f-9675-4e1f174abc5a.e811863d56363a1c8072a026bf1fd39c.jpeg",
+    "alt": "3D Printer X1 printing prototype"
+  },
+  {
+    "id": 8,
+    "name": "3D Printer Pro",
+    "category": "3d",
+    "description": "High-speed 3D printer for industrial prototyping with large build volume.",
+    "specs": "400x400x400mm build volume, 0.05mm resolution, Dual extruder",
+    "image": "https://t3.ftcdn.net/jpg/03/25/27/02/240_F_325270219_tNb2HgOqvJalHiQ6hSAcafqWIOrzgorQ.jpg",
+    "alt": "3D Printer Pro in industrial use"
+  },
+  {
+    "id": 9,
+    "name": "3D Printer Nano",
+    "category": "3d",
+    "description": "Compact 3D printer for small-scale, high-precision prints.",
+    "specs": "200x200x200mm build volume, 0.1mm resolution, USB connectivity",
+    "image": "https://t4.ftcdn.net/jpg/04/49/30/87/240_F_449308752_xkBGspiOsbAADCkET4ihyznpJ8POHmys.jpg",
+    "alt": "3D Printer Nano compact design"
+  },
+  {
+    "id": 10,
+    "name": "3D Printer Ultra",
+    "category": "3d",
+    "description": "Multi-material 3D printer for advanced applications.",
+    "specs": "350x350x350mm build volume, 0.08mm resolution, Heated bed",
+    "image": "https://t4.ftcdn.net/jpg/03/30/42/29/240_F_330422998_No2RbscSrm2unUaBy4zr7ZyBkCKjB9kP.jpg",
+    "alt": "3D Printer Ultra multi-material printing"
+  },
+  {
+    "id": 11,
+    "name": "3D Printer Fusion",
+    "category": "3d",
+    "description": "High-resolution printer for professional-grade prototypes.",
+    "specs": "300x300x300mm build volume, 0.05mm resolution, Auto-leveling",
+    "image": "https://t3.ftcdn.net/jpg/07/15/68/92/240_F_715689298_JoqqZkbBABt2nEcDwP4RH0qOysVnEyxv.jpg",
+    "alt": "3D Printer Fusion high-resolution output"
+  },
+  {
+    "id": 12,
+    "name": "3D Printer Max",
+    "category": "3d",
+    "description": "Large-scale 3D printer for industrial applications.",
+    "specs": "500x500x500mm build volume, 0.1mm resolution, Wi-Fi connectivity",
+    "image": "https://t3.ftcdn.net/jpg/07/48/81/52/240_F_748815239_mb1TcUVqhQMYA8HF6ZmX5kkToG76pIBL.jpg",
+    "alt": "3D Printer Max large-scale printing"
+  },
+  {
+    "id": 13,
+    "name": "Robotic Arm Z",
+    "category": "robotic",
+    "description": "Automated arm for assembly lines. Features 6-axis movement and payload capacity up to 10kg.",
+    "specs": "Reach: 1.5m, Payload: 10kg, Precision: 0.05mm",
+    "image": "https://t4.ftcdn.net/jpg/04/21/49/07/240_F_421490701_xIPIFkLoikeZ7NkK8J3BERf1veLvRz1F.jpg",
+    "alt": "Robotic Arm Z in assembly"
+  },
+  {
+    "id": 14,
+    "name": "Robotic Arm Alpha",
+    "category": "robotic",
+    "description": "High-speed robotic arm for precision tasks.",
+    "specs": "Reach: 1.8m, Payload: 8kg, Precision: 0.03mm",
+    "image": "https://t4.ftcdn.net/jpg/14/62/13/81/240_F_1462138103_d7jKr9IQorVUZRSL1kpSVvmAvOub4T2N.jpg",
+    "alt": "Robotic Arm Alpha precision work"
+  },
+  {
+    "id": 15,
+    "name": "Robotic Arm Beta",
+    "category": "robotic",
+    "description": "Versatile arm for automated welding and assembly.",
+    "specs": "Reach: 2.0m, Payload: 12kg, Precision: 0.04mm",
+    "image": "https://t3.ftcdn.net/jpg/13/72/00/08/240_F_1372000881_SM3DzHK67CCDquUib5ZlPkpsaPZ2n7BB.jpg",
+    "alt": "Robotic Arm Beta welding"
+  },
+  {
+    "id": 16,
+    "name": "Robotic Arm Gamma",
+    "category": "robotic",
+    "description": "Compact robotic arm for small-scale automation.",
+    "specs": "Reach: 1.2m, Payload: 5kg, Precision: 0.06mm",
+    "image": "https://t3.ftcdn.net/jpg/09/77/03/88/240_F_977038854_d1OT1e1YtsJ0VjDJCAm1mOcKIYXLwLgt.jpg",
+    "alt": "Robotic Arm Gamma compact design"
+  },
+  {
+    "id": 17,
+    "name": "Robotic Arm Delta",
+    "category": "robotic",
+    "description": "Heavy-duty arm for industrial applications.",
+    "specs": "Reach: 2.5m, Payload: 20kg, Precision: 0.05mm",
+    "image": "https://t3.ftcdn.net/jpg/06/30/43/98/240_F_630439884_bMEFLXkVtzFw3PJN9fP3iIWYTxNTuIKy.jpg",
+    "alt": "Robotic Arm Delta heavy-duty use"
+  },
+  {
+    "id": 18,
+    "name": "Robotic Arm Omega",
+    "category": "robotic",
+    "description": "Advanced arm with AI-driven control systems.",
+    "specs": "Reach: 1.7m, Payload: 10kg, Precision: 0.02mm",
+    "image": "https://t4.ftcdn.net/jpg/08/98/26/49/240_F_898264923_Ervd4iYXFYMLp4l6OHtzBzrLpBm0piW6.jpg",
+    "alt": "Robotic Arm Omega AI control"
+  },
+  {
+    "id": 19,
+    "name": "Laser Cutter Elite",
+    "category": "laser",
+    "description": "High-power laser cutter for precise material cutting. Suitable for metals, plastics, and wood.",
+    "specs": "60W CO2 laser, 16x24 inch work area, Air assist",
+    "image": "https://images.thdstatic.com/productImages/b5b35096-2a51-5ef5-a7ef-b863624bf9e8/svn/vevor-small-appliance-parts-yco26040cm60w9z3zv1-64_1000.jpg",
+    "alt": "Laser Cutter Elite cutting materials"
+  },
+  {
+    "id": 20,
+    "name": "Laser Cutter Pro",
+    "category": "laser",
+    "description": "High-speed laser cutter for industrial applications.",
+    "specs": "100W CO2 laser, 24x36 inch work area, Auto-focus",
+    "image": "https://media.istockphoto.com/id/180716162/photo/laser-metal-cutting-manufacturing-tool-in-operation.jpg?s=612x612&w=0&k=20&c=rPfgx4MNnP23j4ugf7jIfNP5LtGKapTB8Ld86fzUFho=",
+    "alt": "Laser Cutter Pro in industrial use"
+  },
+  {
+    "id": 21,
+    "name": "Laser Cutter Nano",
+    "category": "laser",
+    "description": "Compact laser cutter for small-scale projects.",
+    "specs": "40W CO2 laser, 12x20 inch work area, USB connectivity",
+    "image": "https://media.istockphoto.com/id/172861869/photo/factory-floor.jpg?s=612x612&w=0&k=20&c=hND141uqZAOn77oW6fSCfwvbwg_JUHa0ZioS-FmtF4w=",
+    "alt": "Laser Cutter Nano compact setup"
+  },
+  {
+    "id": 22,
+    "name": "Laser Cutter Ultra",
+    "category": "laser",
+    "description": "Advanced laser cutter with high precision.",
+    "specs": "80W CO2 laser, 20x28 inch work area, Air assist",
+    "image": "https://media.istockphoto.com/id/185217529/photo/cnc-lathe-workspace.jpg?s=612x612&w=0&k=20&c=ib_BS09uHVHUwK1DtRVpU1x52j-wOvlSxngPR84G0PE=",
+    "alt": "Laser Cutter Ultra high-precision work"
+  },
+  {
+    "id": 23,
+    "name": "Laser Cutter Fusion",
+    "category": "laser",
+    "description": "Versatile cutter for multi-material applications.",
+    "specs": "70W CO2 laser, 18x24 inch work area, Auto-focus",
+    "image": "https://media.istockphoto.com/id/452773033/photo/steel-cutting.jpg?s=612x612&w=0&k=20&c=1OjRYZzgCjmuRhrAPsMgwKwN-SS9ZcaPPToEK0mBDxo=",
+    "alt": "Laser Cutter Fusion multi-material cutting"
+  },
+  {
+    "id": 24,
+    "name": "Laser Cutter Max",
+    "category": "laser",
+    "description": "High-power cutter for large-scale production.",
+    "specs": "120W CO2 laser, 28x40 inch work area, Air assist",
+    "image": "https://media.istockphoto.com/id/187059358/photo/laser-engraving.jpg?s=612x612&w=0&k=20&c=Bm7TblhwNvCoS2cqLL7ORxA4MjA1QEWWoD2eb561EJ8=",
+    "alt": "Laser Cutter Max large-scale production"
+  },
+  {
+    "id": 25,
+    "name": "Injection Molder Max",
+    "category": "injection",
+    "description": "Efficient injection molding machine for plastic parts production. High-speed and energy-efficient.",
+    "specs": "Clamping force: 200 tons, Injection volume: 500g, Cycle time: 10s",
+    "image": "https://www.beaumontinc.com/wp-content/uploads/2015/08/machine.png",
+    "alt": "Injection Molder Max in operation"
+  },
+  {
+    "id": 26,
+    "name": "Injection Molder Pro",
+    "category": "injection",
+    "description": "Precision molder for complex plastic parts.",
+    "specs": "Clamping force: 150 tons, Injection volume: 400g, Cycle time: 8s",
+    "image": "https://a.storyblok.com/f/136567/5760x3840/abc9ddbf3b/produkte-wintec-wirtschaftliche-zwei-platten-spritzgiessmaschine.jpg/m/0x224/filters:format(webp)",
+    "alt": "Injection Molder Pro precision molding"
+  },
+  {
+    "id": 27,
+    "name": "Injection Molder Nano",
+    "category": "injection",
+    "description": "Compact molder for small-scale production.",
+    "specs": "Clamping force: 80 tons, Injection volume: 200g, Cycle time: 12s",
+    "image": "http://a.storyblok.com/f/136567/1400x640/37803a41d7/produkte-holmlose-spritzgiessmaschine.jpg/m/0x224/filters:format(webp)",
+    "alt": "Injection Molder Nano compact design"
+  },
+  {
+    "id": 28,
+    "name": "Injection Molder Ultra",
+    "category": "injection",
+    "description": "High-efficiency molder for large-scale production.",
+    "specs": "Clamping force: 250 tons, Injection volume: 600g, Cycle time: 9s",
+    "image": "https://a.storyblok.com/f/136567/1400x640/955d584c4f/produkte-kleine-spritzgussmaschine.jpg/m/0x224/filters:format(webp)",
+    "alt": "Injection Molder Ultra high-efficiency"
+  },
+  {
+    "id": 29,
+    "name": "Injection Molder Fusion",
+    "category": "injection",
+    "description": "Versatile molder for multi-material parts.",
+    "specs": "Clamping force: 180 tons, Injection volume: 450g, Cycle time: 10s",
+    "image": "https://a.storyblok.com/f/136567/1400x640/ddf47c448e/produkte-vollelektrische-spritzgiessmaschine.jpg/m/0x224/filters:format(webp)",
+    "alt": "Injection Molder Fusion multi-material"
+  },
+  {
+    "id": 30,
+    "name": "Injection Molder Elite",
+    "category": "injection",
+    "description": "Advanced molder with automated features.",
+    "specs": "Clamping force: 220 tons, Injection volume: 550g, Cycle time: 8s",
+    "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/1/15/PlasticsInjectionMoulder-die.jpg/500px-PlasticsInjectionMoulder-die.jpg",
+    "alt": "Injection Molder Elite automated molding"
+  },
+  {
+    "id": 31,
+    "name": "Plasma Cutter Pro",
+    "category": "plasma",
+    "description": "High-precision plasma cutter for metal fabrication.",
+    "specs": "Plasma power: 60A, Cutting thickness: 20mm, Precision: 0.1mm",
+    "image": "https://5.imimg.com/data5/SELLER/Default/2025/6/517580445/RA/DB/BB/739770/dji-20241231151314-0002-d-250x250.png",
+    "alt": "Plasma Cutter Pro cutting metal"
+  },
+  {
+    "id": 32,
+    "name": "Plasma Cutter Ultra",
+    "category": "plasma",
+    "description": "Advanced plasma cutter for thick metal sheets.",
+    "specs": "Plasma power: 100A, Cutting thickness: 30mm, Precision: 0.08mm",
+    "image": "https://5.imimg.com/data5/SELLER/Default/2024/6/424702441/EJ/XK/ER/9586039/h-beam-welding-line-machine-250x250.jpeg",
+    "alt": "Plasma Cutter Ultra thick metal cutting"
+  },
+  {
+    "id": 33,
+    "name": "Plasma Cutter Nano",
+    "category": "plasma",
+    "description": "Compact plasma cutter for small-scale projects.",
+    "specs": "Plasma power: 40A, Cutting thickness: 10mm, Precision: 0.15mm",
+    "image": "https://5.imimg.com/data5/SELLER/Default/2023/1/HV/MI/BI/119946722/500-250x250.webp",
+    "alt": "Plasma Cutter Nano compact cutting"
+  },
+  {
+    "id": 34,
+    "name": "Plasma Cutter Elite",
+    "category": "plasma",
+    "description": "High-speed plasma cutter for industrial use.",
+    "specs": "Plasma power: 80A, Cutting thickness: 25mm, Precision: 0.1mm",
+    "image": "https://www.ibelltools.com/cdn/shop/files/VRP45MAINIMAGE_275x281.jpg?v=1744786736",
+    "alt": "Plasma Cutter Elite industrial cutting"
+  },
+  {
+    "id": 35,
+    "name": "Plasma Cutter Fusion",
+    "category": "plasma",
+    "description": "Versatile plasma cutter for multi-metal applications.",
+    "specs": "Plasma power: 70A, Cutting thickness: 22mm, Precision: 0.12mm",
+    "image": "https://m.media-amazon.com/images/I/715rMMe4UiL._AC_UL480_FMwebp_QL65_.jpg",
+    "alt": "Plasma Cutter Fusion multi-metal cutting"
+  },
+  {
+    "id": 36,
+    "name": "Plasma Cutter Max",
+    "category": "plasma",
+    "description": "Heavy-duty plasma cutter for large-scale fabrication.",
+    "specs": "Plasma power: 120A, Cutting thickness: 35mm, Precision: 0.09mm",
+    "image": "https://m.media-amazon.com/images/I/81UAe3wX0LL._AC_UL480_FMwebp_QL65_.jpg",
+    "alt": "Plasma Cutter Max large-scale fabrication"
+  }
+]
