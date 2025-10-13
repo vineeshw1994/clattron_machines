@@ -149,7 +149,7 @@ const Machines = () => {
                 onClick={() => handleViewDetails(machine._id)}
               >
                 <img 
-                  src={`http://localhost:5000${machine.image}`} 
+                  src={`${URL}${machine.image}`} 
                   alt={machine.name} 
                   className="w-full h-48 object-cover" 
                   loading="lazy" 

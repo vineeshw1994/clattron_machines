@@ -17,9 +17,10 @@ import CompanyInfo from './pages/Admin/CompanyInfo';
 import ProductForm from './pages/Admin/ProductForm';
 import { useFaviconUpdater } from './hooks/useFaviconUpdater';
 import ProtectedRoute from './components/ProtectedRoute'; // Import ProtectedRoute
+import Profile from './pages/Admin/AdminProfile';
+import AdminCustomersPage from './pages/Admin/AdminCustomersPage';
 
 function Layout({ children }) {
-  useFaviconUpdater();
   const { pathname } = useLocation();
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -34,6 +35,8 @@ function Layout({ children }) {
 }
 
 export default function App() {
+  useFaviconUpdater();
+
   return (
     <Routes>
       {/* Public Routes */}
@@ -55,6 +58,8 @@ export default function App() {
           <Route path="/admin/company-info" element={<CompanyInfo />} />
           <Route path="/admin/products/add" element={<ProductForm />} />
           <Route path="/admin/products/edit/:id" element={<ProductForm />} />
+          <Route path="/admin/profile" element={< Profile />} />
+          <Route path="/admin/customers" element={<AdminCustomersPage />} />
         </Route>
       </Route>
     </Routes>

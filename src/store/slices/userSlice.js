@@ -1,12 +1,13 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
+const BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000';
 
 // Async thunk for login
 export const loginUser = createAsyncThunk(
   'user/loginUser',
   async ({ username, password }, { rejectWithValue }) => {
     try {
-      const { data } = await axios.post('http://localhost:5000/api/admin/login', { username, password });
+      const { data } = await axios.post(`${BASE_URL}/api/admin/login`, { username, password });
       return { userInfo: data.user, token: data.token }; // Adjust based on your API response
     } catch (err) {
       return rejectWithValue(err.response?.data?.message || 'Invalid credentials');

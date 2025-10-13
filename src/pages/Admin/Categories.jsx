@@ -2,9 +2,14 @@ import { useState, useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import axios from 'axios';
 import { motion, AnimatePresence } from 'framer-motion';
+import { Link, useNavigate } from 'react-router-dom';
+import { FiArrowLeft } from 'react-icons/fi';
+import { useSelector } from 'react-redux';
 const URL = import.meta.env.VITE_API_URL
 
 export default function Categories() {
+   const navigate = useNavigate();
+  const { token } = useSelector((state) => state.user);
   const [categories, setCategories] = useState([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [editId, setEditId] = useState(null);
@@ -13,9 +18,17 @@ export default function Categories() {
     defaultValues: { name: '', description: '' },
   });
 
+ 
+
   useEffect(() => {
+    if (!token) {
+      navigate('/admin/login');
+      return;
+    }
+
+    axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
     fetchCategories();
-  }, []);
+  }, [navigate, token]);
 
   useEffect(() => {
     const handleResize = () => {
@@ -90,6 +103,18 @@ export default function Categories() {
       initial="hidden"
       animate="visible"
     >
+      {/* Breadcrumbs */}
+      <motion.nav className="flex items-center mb-6 text-sm" variants={itemVariants}>
+        <Link
+          to="/admin/dashboard"
+          className="flex items-center text-blue-600 hover:text-blue-800"
+        >
+          <FiArrowLeft className="mr-2" />
+          Dashboard
+        </Link>
+        <span className="mx-2 text-gray-400">/</span>
+        <span className="text-gray-700 font-medium">Categories</span>
+      </motion.nav>
       <div className="max-w-7xl mx-auto">
         <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-4 sm:mb-6 gap-3 sm:gap-0">
           <h1 className="text-2xl sm:text-3xl font-bold text-gray-800">Manage Categories</h1>

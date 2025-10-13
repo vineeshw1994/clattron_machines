@@ -1,9 +1,14 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { motion } from 'framer-motion';
-import Logo from '../assets/image.png';
+import { useSelector, useDispatch } from 'react-redux';
+import { fetchCompanyInfo } from '../store/slices/companySlice'; // Adjust path – public fetch
+import StaticLogo from '../assets/image.png'; // Fallback static logo
 import { FaFacebookF, FaTwitter, FaLinkedinIn, FaInstagram, FaYoutube, FaEnvelope, FaPhone, FaMapMarkerAlt } from 'react-icons/fa';
+const URL = import.meta.env.VITE_API_URL || 'http://localhost:5000';
 
 const Footer = () => {
+  const company = useSelector((state) => state.company.companyInfo); // Get from Redux
+  const dispatch = useDispatch();
   const containerVariants = {
     hidden: { opacity: 0 },
     visible: {
@@ -33,8 +38,16 @@ const Footer = () => {
     },
   };
 
+  // Fetch company info for dynamic logo
+  useEffect(() => {
+    dispatch(fetchCompanyInfo()); // Public thunk
+  }, [dispatch]);
+
+  // Dynamic logo URL
+  const logoSrc = company?.logo ? `${URL}${company.logo}` : StaticLogo;
+
   return (
-    <footer role="contentinfo" className="bg-gradient-to-r from-blue-900 via-blue-800 to-indigo-900 text-white py-8 px-6 relative overflow-hidden">
+    <footer role="contentinfo" className="bg-gradient-to-r from-blue-900 via-blue-800 to-indigo-900 text-white py-3 px-2 relative overflow-hidden">
       {/* Subtle background pattern */}
       <div className="absolute inset-0 opacity-5">
         <div className="absolute top-0 left-0 w-full h-full bg-[radial-gradient(circle_at_1rem_1rem,#e0f2fe,transparent)]" />
@@ -52,16 +65,18 @@ const Footer = () => {
           {/* Logo & Brand */}
           <motion.div variants={itemVariants} className="footer-logo col-span-1 sm:col-span-2 lg:col-span-1">
             <motion.img
-              src={Logo}
+              src={logoSrc}
               alt="Clattron Machines Logo"
               className="h-16 mb-4 rounded-lg shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105"
               whileHover={{ scale: 1.05, rotate: 2 }}
+              onError={(e) => { e.target.src = StaticLogo; }} // Fallback
             />
             <motion.p
               variants={itemVariants}
               className="text-sm font-medium opacity-90"
             >
-              Clattron Private Limited © {new Date().getFullYear()}
+              {company && company.name ? company?.name : 'Clattron Pvt Limited'} -
+              © {new Date().getFullYear()}
             </motion.p>
             <motion.p
               variants={itemVariants}
@@ -73,14 +88,14 @@ const Footer = () => {
 
           {/* Quick Links */}
           <motion.div variants={itemVariants} className="footer-links">
-            <h3 className="text-lg font-bold mb-6 text-whitesmoke border-b border-yellow-400/30 pb-2">Quick Links</h3>
+            <h3 className="text-lg font-bold mb-2 text-whitesmoke border-b border-yellow-400/30 pb-2">Quick Links</h3>
             <ul className="space-y-2">
               {[
                 { href: '/', label: 'Home' },
                 { href: '/machines', label: 'Machines' },
                 { href: '/about', label: 'About Us' },
                 { href: '/contact', label: 'Contact' },
-              ].map((link,) => (
+              ].map((link) => (
                 <motion.li key={link.href} variants={itemVariants}>
                   <motion.a
                     href={link.href}
@@ -97,19 +112,22 @@ const Footer = () => {
 
           {/* Contact Info */}
           <motion.div variants={itemVariants} className="footer-contact">
-            <h3 className="text-lg font-bold mb-6 text-whitesmoke border-b border-yellow-400/30 pb-2">Get in Touch</h3>
+            <h3 className="text-lg font-bold mb-2 text-whitesmoke border-b border-yellow-400/30 pb-2">Get in Touch</h3>
             <ul className="space-y-3">
               <li className="flex items-center text-white/90 text-sm">
                 <FaMapMarkerAlt className="mr-3 text-whitesmoke text-lg" />
-                Kaliyakkavilai, Kanyakumari, Tamil Nadu 629153
+                {company?.address
+                  ? `${company.city}, ${company.state}, ${company.zipcode}`
+                  : 'Kaliyakkavilai, Kanyakumari, Tamil Nadu 629153'}
               </li>
               <li className="flex items-center text-white/90 text-sm">
                 <FaPhone className="mr-3 text-whitesmoke text-lg" />
-                +91 9600444505
+                {company?.phone ? company.phone : '+91 9600444505'}
+
               </li>
               <li className="flex items-center text-white/90 text-sm">
                 <FaEnvelope className="mr-3 text-whitesmoke text-lg" />
-                sales@clattron.com
+                {company?.email ? company.email : 'sales@clattron.com'}
               </li>
             </ul>
           </motion.div>
@@ -124,7 +142,7 @@ const Footer = () => {
                 { icon: FaLinkedinIn, href: 'https://linkedin.com/company/clattron', label: 'LinkedIn' },
                 { icon: FaInstagram, href: 'https://instagram.com/clattron', label: 'Instagram' },
                 { icon: FaYoutube, href: 'https://youtube.com/clattron', label: 'YouTube' },
-              ].map((social,) => (
+              ].map((social) => (
                 <motion.a
                   key={social.label}
                   href={social.href}
@@ -144,7 +162,7 @@ const Footer = () => {
         </motion.div>
 
         {/* Bottom Divider */}
-        <div className="w-full h-px bg-gradient-to-r from-transparent via-yellow-400/50 to-transparent my-4" />
+        <div className="w-full h-px bg-gradient-to-r from-transparent via-yellow-400/50 to-transparent my-2" />
 
         {/* Privacy & Terms */}
         <motion.div
@@ -154,7 +172,7 @@ const Footer = () => {
           viewport={{ once: true }}
           className="text-center text-sm text-white/70 space-y-2"
         >
-          <p>&copy; {new Date().getFullYear()} Clattron Private Limited. All rights reserved.</p>
+          <p>&copy; {new Date().getFullYear()} {company?.name ? company?.name : 'Clattron Private Limited'}. All rights reserved.</p>
           <div className="flex flex-wrap justify-center gap-4">
             {/* <motion.a href="/privacy" className="hover:text-yellow-300 transition-colors" whileHover={{ scale: 1.05 }}>
               Privacy Policy

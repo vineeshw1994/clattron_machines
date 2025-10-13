@@ -1,86 +1,128 @@
 import { useState, useEffect } from 'react';
-import { useParams, useNavigate, Link } from 'react-router-dom';
+import { Link, useNavigate, useParams } from 'react-router-dom';
 import { useForm, useFieldArray } from 'react-hook-form';
 import axios from 'axios';
-import { motion } from 'framer-motion';
-const URL = import.meta.env.VITE_API_URL
+import { motion, AnimatePresence } from 'framer-motion';
+import { FiArrowLeft, FiAlertCircle } from 'react-icons/fi';
+import { useSelector } from 'react-redux';
 
+const URL = import.meta.env.VITE_API_URL || 'http://localhost:5000';
 
 export default function ProductForm() {
+  const { token } = useSelector((state) => state.user);
   const { id } = useParams();
   const isEdit = !!id;
   const navigate = useNavigate();
   const [categories, setCategories] = useState([]);
   const [previewImage, setPreviewImage] = useState(null);
-  const { register, handleSubmit, control, reset, formState: { errors } } = useForm({
-    defaultValues: { name: '', description: '', category: '', specs: [{ key: '', value: '' }] },
+  const [error, setError] = useState('');
+  const [success, setSuccess] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
+  const { register, handleSubmit, control, reset, setError: setFormError, clearErrors, formState: { errors } } = useForm({
+    defaultValues: {
+      name: '',
+      description: '',
+      category: '',
+      specs: [{ key: '', value: '' }],
+      image: null // For file validation
+    },
   });
   const { fields, append, remove } = useFieldArray({ control, name: 'specs' });
   const [image, setImage] = useState(null);
 
   useEffect(() => {
+    if (!token) {
+      navigate('/admin/login');
+      return;
+    }
+    axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+
     fetchCategories();
     if (isEdit) {
       fetchProduct();
     }
-  }, [id]);
+  }, [id, token, navigate]);
 
   const fetchCategories = async () => {
     try {
-      const { data } = await axios.get(`${import.meta.env.VITE_API_URL}/api/admin/categories`);
+      const { data } = await axios.get(`${URL}/api/admin/categories`);
       setCategories(data);
     } catch (err) {
       console.error('Error fetching categories:', err);
+      setError('Failed to load categories');
     }
   };
 
   const fetchProduct = async () => {
     try {
-      const { data } = await axios.get(`${import.meta.env.VITE_API_URL}/api/admin/products/${id}`);
+      const { data } = await axios.get(`${URL}/api/admin/products/${id}`);
       reset({
         name: data.name,
         description: data.description,
         category: data.category._id,
         specs: Object.entries(data.specs || {}).map(([key, value]) => ({ key, value })),
+        image: null,
       });
       setPreviewImage(data.image ? `${URL}${data.image}` : null);
-      // setPreviewImage(data.image || null);
     } catch (err) {
       console.error('Error fetching product:', err);
-    }
-  };
-
-  const onSubmit = async (data) => {
-    const formData = new FormData();
-    formData.append('name', data.name);
-    formData.append('description', data.description);
-    formData.append('category', data.category);
-    formData.append('specs', JSON.stringify(data.specs.reduce((acc, { key, value }) => ({ ...acc, [key]: value }), {})));
-    if (image) formData.append('image', image);
-
-    try {
-      if (isEdit) {
-        await axios.put(`${import.meta.env.VITE_API_URL}/api/admin/products/${id}`, formData, { headers: { 'Content-Type': 'multipart/form-data' } });
-      } else {
-        await axios.post(`${import.meta.env.VITE_API_URL}/api/admin/products`, formData, { headers: { 'Content-Type': 'multipart/form-data' } });
-      }
-      navigate('/admin/products');
-    } catch (err) {
-      console.error('Error saving product:', err);
+      setError('Failed to load product');
     }
   };
 
   const handleImageChange = (e) => {
     const file = e.target.files[0];
-    setImage(file);
-    setPreviewImage(file ? URL.createObjectURL(file) : null);
+    if (file) {
+      if (file.size > 5 * 1024 * 1024) { // 5MB limit
+        setFormError('image', { message: 'Image size must be less than 5MB' });
+        setImage(null);
+        setPreviewImage(null);
+        return;
+      }
+      clearErrors('image');
+      setImage(file);
+      setPreviewImage(URL.createObjectURL(file));
+    }
   };
 
   const handleRemoveImage = () => {
     setImage(null);
     setPreviewImage(null);
-    // Reset the file input field
+    clearErrors('image');
     document.getElementById('imageInput').value = '';
+  };
+
+  const onSubmit = async (data) => {
+    setError('');
+    setSuccess('');
+    setIsLoading(true);
+
+    const formData = new FormData();
+    Object.entries(data).forEach(([key, value]) => {
+      if (value) formData.append(key, value);
+    });
+    if (image) formData.append('image', image);
+
+    try {
+      if (isEdit) {
+        await axios.put(`${URL}/api/admin/products/${id}`, formData, {
+          headers: { 'Content-Type': 'multipart/form-data' }
+        });
+      } else {
+        await axios.post(`${URL}/api/admin/products`, formData, {
+          headers: { 'Content-Type': 'multipart/form-data' }
+        });
+      }
+      setSuccess(isEdit ? 'Product updated successfully!' : 'Product created successfully!');
+      setTimeout(() => {
+        navigate('/admin/products');
+      }, 1500);
+    } catch (err) {
+      console.error('Error saving product:', err);
+      setError(err.response?.data?.message || 'Failed to save product. Please try again.');
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   // Framer Motion variants
@@ -94,6 +136,12 @@ export default function ProductForm() {
     visible: { opacity: 1, y: 0 },
   };
 
+  const messageVariants = {
+    hidden: { opacity: 0, y: -20, scale: 0.95 },
+    visible: { opacity: 1, y: 0, scale: 1, transition: { duration: 0.3 } },
+    exit: { opacity: 0, y: -20, scale: 0.95, transition: { duration: 0.2 } },
+  };
+
   return (
     <motion.div
       className="bg-[#f5f5f5] p-2 sm:p-4 lg:p-6 min-h-screen"
@@ -101,13 +149,48 @@ export default function ProductForm() {
       initial="hidden"
       animate="visible"
     >
+      {/* Breadcrumbs */}
+      <motion.nav className="flex items-center mb-6 text-sm" variants={itemVariants}>
+        <Link
+          to="/admin/products"
+          className="flex items-center text-blue-600 hover:text-blue-800"
+        >
+          <FiArrowLeft className="mr-2" />
+          Product List
+        </Link>
+        <span className="mx-2 text-gray-400">/</span>
+        <span className="text-gray-700 font-medium"> {isEdit ? 'Edit Product' : 'Add Product'}</span>
+      </motion.nav>
       <div className="max-w-7xl mx-auto">
-        {/* Breadcrumbs */}
-        <nav className="text-xs sm:text-sm mb-3 sm:mb-4">
-          <Link to="/admin/products" className="text-blue-600 hover:underline">Product List</Link> / {isEdit ? 'Edit Product' : 'Add Product'}
-        </nav>
-
         <h1 className="text-2xl sm:text-3xl font-bold text-gray-800 mb-4 sm:mb-6">{isEdit ? 'Edit Product' : 'Add Product'}</h1>
+
+        {/* Success/Error Messages */}
+        <AnimatePresence>
+          {error && (
+            <motion.div
+              className="bg-red-50 border-l-4 border-red-500 text-red-700 p-3 rounded-lg mb-4 flex items-center shadow-md text-sm"
+              variants={messageVariants}
+              initial="hidden"
+              animate="visible"
+              exit="exit"
+            >
+              <FiAlertCircle className="mr-2 text-lg flex-shrink-0" />
+              <p className="font-medium">{error}</p>
+            </motion.div>
+          )}
+          {success && (
+            <motion.div
+              className="bg-green-50 border-l-4 border-green-500 text-green-700 p-3 rounded-lg mb-4 flex items-center shadow-md text-sm"
+              variants={messageVariants}
+              initial="hidden"
+              animate="visible"
+              exit="exit"
+            >
+              <FiCheckCircle className="mr-2 text-lg flex-shrink-0" />
+              <p className="font-medium">{success}</p>
+            </motion.div>
+          )}
+        </AnimatePresence>
 
         <form onSubmit={handleSubmit(onSubmit)} className="bg-white p-3 sm:p-6 rounded-xl shadow-2xl border border-gray-200 bg-gradient-to-br from-gray-50 to-gray-100 space-y-3 sm:space-y-4">
           <motion.div variants={itemVariants} className="space-y-2">
@@ -117,7 +200,7 @@ export default function ProductForm() {
               placeholder="Product Name"
               className="block w-full border border-gray-300 rounded-lg p-2 sm:p-3 focus:outline-none focus:ring-2 focus:ring-blue-500"
             />
-            {errors.name && <p className="text-red-500 text-xs sm:text-sm">{errors.name.message}</p>}
+            {errors.name && <p className="text-red-500 text-xs sm:text-sm flex items-center"><FiAlertCircle className="mr-1" />{errors.name.message}</p>}
           </motion.div>
 
           <motion.div variants={itemVariants} className="space-y-2">
@@ -127,11 +210,11 @@ export default function ProductForm() {
               className="block w-full border border-gray-300 rounded-lg p-2 sm:p-3 focus:outline-none focus:ring-2 focus:ring-blue-500"
             >
               <option value="">Select Category</option>
-              {categories.map(cat => (
+              {categories?.map(cat => (
                 <option key={cat._id} value={cat._id}>{cat.name}</option>
               ))}
             </select>
-            {errors.category && <p className="text-red-500 text-xs sm:text-sm">{errors.category.message}</p>}
+            {errors.category && <p className="text-red-500 text-xs sm:text-sm flex items-center"><FiAlertCircle className="mr-1" />{errors.category.message}</p>}
           </motion.div>
 
           <motion.div variants={itemVariants} className="space-y-2">
@@ -140,9 +223,9 @@ export default function ProductForm() {
               {...register('description', { required: 'Description is required' })}
               placeholder="Description"
               className="block w-full border border-gray-300 rounded-lg p-2 sm:p-3 focus:outline-none focus:ring-2 focus:ring-blue-500"
-              rows="3" // Reduced for mobile
+              rows="3"
             />
-            {errors.description && <p className="text-red-500 text-xs sm:text-sm">{errors.description.message}</p>}
+            {errors.description && <p className="text-red-500 text-xs sm:text-sm flex items-center"><FiAlertCircle className="mr-1" />{errors.description.message}</p>}
           </motion.div>
 
           <motion.div variants={itemVariants} className="space-y-2">
@@ -154,6 +237,7 @@ export default function ProductForm() {
               className="block w-full border border-gray-300 rounded-lg p-2 sm:p-3"
               accept="image/*"
             />
+            {errors.image && <p className="text-red-500 text-xs sm:text-sm flex items-center"><FiAlertCircle className="mr-1" />{errors.image.message}</p>}
             {previewImage && (
               <div className="relative mt-2 sm:mt-4">
                 <img
@@ -216,6 +300,7 @@ export default function ProductForm() {
               className="bg-green-500 text-white px-4 py-2 rounded-lg hover:bg-green-600 w-full sm:w-auto"
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
+              disabled={isLoading}
             >
               {isEdit ? 'Update Product' : 'Create Product'}
             </motion.button>

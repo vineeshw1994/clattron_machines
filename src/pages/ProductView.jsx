@@ -67,9 +67,9 @@ const ProductView = () => {
       </button>
       <div className="bg-white p-6 rounded-lg shadow-md">
         <img 
-          src={`http://localhost:5000${product.image}`} 
+          src={`${URL}${product.image}`} 
           alt={product.name} 
-          className="w-full h-64 object-cover rounded mb-4" 
+          className="w-full h-64 object-contain rounded-2xl mb-4" 
         />
         <h2 className="text-2xl font-bold text-blue-900 mb-2">{product.name}</h2>
         <p className="text-gray-700 mb-4">{product.description}</p>

@@ -1,13 +1,24 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { motion } from 'framer-motion';
+import { fetchCompanyInfo } from '../store/slices/companySlice'; // For dynamic logo
+import { useDispatch, useSelector } from 'react-redux';
+
 const URL = import.meta.env.VITE_API_URL
 
 const Contact = () => {
+  const dispatch = useDispatch();
+  const company = useSelector((state) => state.company.companyInfo);
+
   const [formData, setFormData] = useState({ name: '', email: '', phone: '', message: '' });
   const [message, setMessage] = useState('');
   const [isSuccess, setIsSuccess] = useState(false);
   const formRef = useRef(null);
   const [loading, setLoading] = useState(false);
+
+  // Fetch company for dynamic logo
+  useEffect(() => {
+    dispatch(fetchCompanyInfo());
+  }, [dispatch]);
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.id]: e.target.value });
@@ -37,10 +48,10 @@ const Contact = () => {
       } else {
         setMessage('Failed to send message. Please try again.');
         setIsSuccess(false);
-        setLoading( false)
+        setLoading(false)
       }
     } catch (error) {
-      setLoading (false);
+      setLoading(false);
       setMessage('Error sending message. Please check your connection.');
       setIsSuccess(false);
     }
@@ -148,15 +159,15 @@ const Contact = () => {
           <div className="space-y-4 text-gray-700">
             <p className="flex items-center gap-2">
               <i className="fas fa-envelope text-blue-900"></i>
-              Email: <a href="mailto:info@unicaremachines.com" className="text-blue-900 hover:text-yellow-400">sales@clattron.com</a>
+              Email: <a href="mailto:info@unicaremachines.com" className="text-blue-900 hover:text-yellow-400">{company?.email ? company.email : 'sales@clattron.com'}</a>
             </p>
             <p className="flex items-center gap-2">
               <i className="fas fa-phone text-blue-900"></i>
-              Phone: <a href="tel:+919600444505" className="text-blue-900 hover:text-yellow-400">+91 9600444505</a>
+              Phone: <a href={`tel:${91}${company?.mobile?.replace(/[\s-]/g, '')}`} className="text-blue-900 hover:text-yellow-400">{company?.mobile ? company.mobile : '+91 9600444505'}</a>
             </p>
             <p className="flex items-center gap-2">
               <i className="fas fa-map-marker-alt text-blue-900"></i>
-              Address: 9-5-J, Chekkala Vilai Veedu, Mecode, Kaliyakkavilai, Kanyakumari, Tamil Nadu 629153
+              Address: {company ? `${company?.address}, ${company?.city}, Kanyakumari, ${company?.state}, ${company?.zipcode}` : '9-5-J, Chekkala Vilai Veedu, Mecode, Kaliyakkavilai, Kanyakumari, Tamil Nadu 629153'}
             </p>
             <p className="flex items-center gap-2">
               <i className="fas fa-clock text-blue-900"></i>
@@ -167,7 +178,7 @@ const Contact = () => {
               Support: <a href="mailto:support@unicaremachines.com" className="text-blue-900 hover:text-yellow-400">support@unicaremachines.com</a>
             </p> */}
             <a
-              href="tel:+919600444505"
+              href={`tel:${91}${company?.mobile?.replace(/[\s-]/g, '')}`}
               className="block mt-4 bg-yellow-400 text-blue-900 font-bold py-2 text-center rounded hover:bg-yellow-300 transition-colors"
             >
               Call Now

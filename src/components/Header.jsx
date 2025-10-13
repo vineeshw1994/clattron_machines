@@ -1,27 +1,46 @@
-import React, { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { NavLink } from 'react-router-dom';
-import Logo from '../assets/logo.png';
-import { FaBars, FaTimes } from 'react-icons/fa'; // Import React Icons
+import { useSelector, useDispatch } from 'react-redux'; 
+import { fetchCompanyInfo } from '../store/slices/companySlice'; // Adjust path – public fetch
+import StaticLogo from '../assets/logo.png'; // Fallback static logo
+import { FaBars, FaTimes } from 'react-icons/fa';
+const URL = import.meta.env.VITE_API_URL || 'http://localhost:5000';
 
 const Header = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [isActive, _setIsActive] = useState(false);
+  const company = useSelector((state) => state.company.companyInfo); // Get from Redux
+  const dispatch = useDispatch();
+
   const toggleMenu = () => {
     setIsOpen(!isOpen);
   };
+
+  // Fetch company info on mount for dynamic logo/favicon
+  useEffect(() => {
+    dispatch(fetchCompanyInfo()); // Assumes thunk works for public (no token needed)
+  }, [dispatch]);
+
+  // Dynamic logo URL
+  const logoSrc = company?.logo ? `${URL}${company.logo}` : StaticLogo;
 
   return (
     <header role="banner" className="fixed w-full top-0 z-50">
       <nav className="flex justify-between items-center bg-white text-white p-4 shadow-lg">
         <div className="flex items-center">
           <NavLink to="/" className="flex items-center" aria-label="Clattron Machines homepage">
-            <img src={Logo} alt="Clattron Machines Logo" className="h-18 mr-3 transition-transform duration-300 rounded-md hover:scale-110 sm:h-14" />
+            <img 
+              src={logoSrc} 
+              alt="Clattron Machines Logo" 
+              className="h-18 mr-3 transition-transform duration-300 rounded-md hover:scale-110 sm:h-14" 
+              onError={(e) => { e.target.src = StaticLogo; }} // Fallback on load error
+            />
             <motion.h1
               initial={{ opacity: 0, x: -20 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.5 }}
-              className="text-xl  font-bold text-blue-500 sm:text-lg hidden sm:hidden md:block"
+              className="text-xl font-bold text-blue-500 sm:text-lg hidden sm:hidden md:block"
             >
               Clattron <span className='text-black'>Private</span>  <span style={{color:'rgb(251,5,8)'}}>Limited</span>
             </motion.h1>
@@ -67,7 +86,7 @@ const Header = () => {
               <NavLink
                 to="/machines"
                 className={({ isActive }) =>
-                  `nav-link block relative text-blue-500 text-lg font-semibold px-6 py-3 transition-all duration-300 hover:bg-blue-700/70 rounded-lg ${isActive ? 'text-red-600 font-semibold' : ''
+                  `nav-link block relative text-blue-500 text-lg font-semibold px-6 py-3 transition-all duration-300 hover:bg-blue-700/70 hover:text-white rounded-lg ${isActive ? 'text-red-600 font-semibold' : ''
                   } sm:text-base sm:px-4 sm:py-2`
                 }
                 aria-current={isActive ? 'page' : undefined}
@@ -92,7 +111,7 @@ const Header = () => {
               <NavLink
                 to="/about"
                 className={({ isActive }) =>
-                  `nav-link block relative text-blue-500 text-lg font-semibold px-6 py-3 transition-all duration-300 hover:bg-blue-700/70 rounded-lg ${isActive ? 'text-red-600 font-semibold' : ''
+                  `nav-link block relative text-blue-500 text-lg font-semibold px-6 py-3 transition-all duration-300 hover:bg-blue-700/70 hover:text-white rounded-lg ${isActive ? 'text-red-600 font-semibold' : ''
                   } sm:text-base sm:px-4 sm:py-2`
                 }
                 aria-current={isActive ? 'page' : undefined}
@@ -117,7 +136,7 @@ const Header = () => {
               <NavLink
                 to="/contact"
                 className={({ isActive }) =>
-                  `nav-link block relative text-blue-500 text-lg font-semibold px-6 py-3 transition-all duration-300 hover:bg-blue-700/70 rounded-lg ${isActive ? 'text-red-600 font-semibold' : ''
+                  `nav-link block relative text-blue-500 text-lg font-semibold px-6 py-3 transition-all duration-300 hover:bg-blue-700/70 hover:text-white rounded-lg ${isActive ? 'text-red-600 font-semibold' : ''
                   } sm:text-base sm:px-4 sm:py-2`
                 }
                 aria-current={isActive ? 'page' : undefined}
@@ -149,4 +168,4 @@ const Header = () => {
   );
 };
 
-export default Header;  
+export default Header;
