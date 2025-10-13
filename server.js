@@ -1,12 +1,13 @@
-const express = require('express');
-const nodemailer = require('nodemailer');
-const bodyParser = require('body-parser');
-const cors = require('cors');
-const dotenv = require('dotenv');
-const mongoose = require('mongoose');
-const multer = require('multer');
-const path = require('path');
-const routes = require('./routes');
+const express = require("express");
+const nodemailer = require("nodemailer");
+const bodyParser = require("body-parser");
+const cors = require("cors");
+const dotenv = require("dotenv");
+const mongoose = require("mongoose");
+const multer = require("multer");
+const path = require("path");
+const routes = require("./routes");
+const Customer = require("./models/Customer");
 
 dotenv.config();
 
@@ -17,16 +18,17 @@ app.use(cors());
 const email = process.env.EMAIL_USER;
 const password = process.env.EMAIL_PASSWORD;
 // MongoDB connection
-mongoose.connect(process.env.MONGODB_URI)
-  .then(() => console.log('MongoDB connected'))
-  .catch(err => console.error('MongoDB connection error:', err));
+mongoose
+  .connect(process.env.MONGODB_URI)
+  .then(() => console.log("MongoDB connected"))
+  .catch((err) => console.error("MongoDB connection error:", err));
 
 // Static folder for uploads
-app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
+app.use("/uploads", express.static(path.join(__dirname, "uploads")));
 
 // Your existing contact form endpoint
 const transporter = nodemailer.createTransport({
-  host: 'smtp.gmail.com',
+  host: "smtp.gmail.com",
   port: 465,
   secure: true,
   auth: {
@@ -35,8 +37,12 @@ const transporter = nodemailer.createTransport({
   },
 });
 
-app.post('/api/send-email', (req, res) => {
+app.post("/api/send-email", async (req, res) => {
   const { name, email, phone, message } = req.body;
+
+  const customer = new Customer({ name, email, phone, message });
+  await customer.save();
+
   const emailTemplate = `
     <!DOCTYPE html>
     <html lang="en">
@@ -94,7 +100,10 @@ app.post('/api/send-email', (req, res) => {
             </div>
           </div>
           <div class="section" style="margin-bottom: 25px;">
-            <p style="color: #666666; font-size: 12px;">This email was automatically generated on ${new Date().toLocaleString("en-IN", { timeZone: "Asia/Kolkata" })}. Please do not reply directly to this email.</p>
+            <p style="color: #666666; font-size: 12px;">This email was automatically generated on ${new Date().toLocaleString(
+              "en-IN",
+              { timeZone: "Asia/Kolkata" }
+            )}. Please do not reply directly to this email.</p>
           </div>
         </div>
         <div class="footer" style="background: linear-gradient(90deg, #2e4057, #1a2a44); color: #ffffff; text-align: center; padding: 20px; font-size: 12px; line-height: 1.5;">
@@ -117,16 +126,16 @@ app.post('/api/send-email', (req, res) => {
   transporter.sendMail(mailOptions, (error, info) => {
     if (error) {
       console.log(error);
-      res.status(500).send('Failed to send message. Please try again.');
+      res.status(500).send("Failed to send message. Please try again.");
     } else {
-      console.log('Email sent: ' + info.response);
-      res.status(200).send('Message sent successfully!'); 
+      console.log("Email sent: " + info.response);
+      res.status(201).json({ message: "Inquiry saved successfully", customer });
     }
   });
 });
 
 // Mount routes
-app.use('/api', routes);
+app.use("/api", routes);
 
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));

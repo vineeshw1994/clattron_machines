@@ -6,11 +6,22 @@ const { generateToken } = require('../utils/jwtUtils');
 
 exports.login = async ({ username, password }) => {
   const admin = await Admin.findOne({ username });
-  console.log(admin,'----->admin')
+  console.log(admin, '----->admin');
   if (!admin || !(await admin.comparePassword(password))) {
     throw new Error('Invalid credentials');
   }
-  return generateToken({ id: admin._id });
+  const token = generateToken({ id: admin._id });
+  // Return token + user info (exclude password)
+  return {
+    token,
+    user: {
+      id: admin._id,
+      name: admin.name,
+      email: admin.email,
+      mobile: admin.mobile,
+      username: admin.username,
+    },
+  };
 };
 
 exports.createCategory = (data) => Category.create(data);

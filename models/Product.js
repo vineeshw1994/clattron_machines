@@ -8,7 +8,8 @@ const productSchema = new mongoose.Schema({
   specs: { type: Map, of: String },
   image: { type: String },
   disabled: { type: Boolean, default: false },
-  featured: { type: Boolean, default: false }, // Added featured field
+  featured: { type: Boolean, default: false }, 
+  explored: { type: Boolean, default: false }, 
 });
 
 module.exports = mongoose.model('Product', productSchema);

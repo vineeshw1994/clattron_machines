@@ -16,10 +16,16 @@ router.post("/login", adminController.login);
 
 router.get("/featured-machines", adminController.getFeaturedMachines);
 
+// get explored products
+router.get("/explored-machines", adminController.getExploredProducts);
+
 router.get("/products-clients", adminController.getProducts_clients);
 
 // Get single product by ID
 router.get("/products/:id", adminController.getProductById);
+
+// Add public route in routes/company.js or admin.js
+router.get('/public', adminController.getPublicCompanyInfo);
 
 // Protected routes
 router.use(verifyToken); // Middleware to protect below routes
@@ -52,22 +58,53 @@ router.patch(
   adminController.toggleProductDisable
 );
 
+// Toggle product featured status
 router.patch(
   "/products/:id/toggle-featured",
   verifyToken,
   adminController.toggleFeatured
 );
 
+// Toggle product explored status
+router.patch(
+  "/products/:id/toggle-explored",
+  verifyToken,
+  adminController.toggleExplored
+);
+
+
 router.put(
   "/company-info",
   upload.fields([
     { name: "logo", maxCount: 1 },
     { name: "favicon", maxCount: 1 },
+    { name: "video", maxCount: 1 },
   ]),
   adminController.updateCompanyInfo
 );
 router.get("/company-info", adminController.getCompanyInfo);
 
+
+
 router.post("/logout", verifyToken, adminController.logout);
+
+// GET profile
+router.get('/profile', verifyToken, adminController.getProfile);
+
+// PUT profile info
+router.put('/profile', verifyToken, adminController.updateProfile);
+
+// PUT password
+router.put('/profile/password', verifyToken, adminController.updatePassword);
+
+
+//All customers
+router.get('/all-customers', verifyToken, adminController.getAllCustomers);
+
+// Admin - List customers
+router.get('/customers', verifyToken, adminController.getCustomers);
+
+// Admin - Export
+router.get('/customers/export', verifyToken, adminController.exportCustomers);
 
 module.exports = router;
