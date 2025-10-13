@@ -197,7 +197,7 @@ const FeaturedMachines = () => {
         </motion.button>
 
         {/* Stats Footer – Responsive Grid */}
-        <motion.div
+        {/* <motion.div
           className="mt-12 grid grid-cols-1 sm:grid-cols-3 gap-4 sm:gap-6 max-w-md sm:max-w-4xl mx-auto text-center"
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -208,15 +208,12 @@ const FeaturedMachines = () => {
             <div className="text-2xl sm:text-3xl font-bold text-blue-600 mb-2">{featuredMachines.length}</div>
             <div className="text-gray-600 text-sm sm:text-base">Premium Machines</div>
           </motion.div>
-          {/* <motion.div variants={{ opacity: 1 }} className="bg-white p-4 rounded-lg shadow-md">
-            <div className="text-2xl sm:text-3xl font-bold text-green-600 mb-2">24/7</div>
-            <div className="text-gray-600 text-sm sm:text-base">Support</div>
-          </motion.div> */}
+         
           <motion.div variants={{ opacity: 1 }} className="bg-white p-4 rounded-lg shadow-md">
             <div className="text-2xl sm:text-3xl font-bold text-indigo-600 mb-2">100%</div>
             <div className="text-gray-600 text-sm sm:text-base">Satisfaction</div>
           </motion.div>
-        </motion.div>
+        </motion.div> */}
       </div>
     </motion.section>
   );
