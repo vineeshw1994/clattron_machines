@@ -55,9 +55,10 @@ const FeaturedMachines = () => {
 
   if (error || featuredMachines?.length === 0) {
     return (
-      <section className="section machines py-16 px-2 sm:px-4 lg:px-6 bg-gradient-to-b from-gray-50 to-blue-50 min-h-[50vh] flex justify-center items-center">
-        <p className="text-gray-600 text-center text-sm sm:text-base">No featured machines available at the moment.</p>
-      </section>
+      null
+      // <section className="section machines py-16 px-2 sm:px-4 lg:px-6 bg-gradient-to-b from-gray-50 to-blue-50 min-h-[50vh] flex justify-center items-center">
+      //   <p className="text-gray-600 text-center text-sm sm:text-base">No featured machines available at the moment.</p>
+      // </section>
     );
   }
 
@@ -207,10 +208,10 @@ const FeaturedMachines = () => {
             <div className="text-2xl sm:text-3xl font-bold text-blue-600 mb-2">{featuredMachines.length}</div>
             <div className="text-gray-600 text-sm sm:text-base">Premium Machines</div>
           </motion.div>
-          <motion.div variants={{ opacity: 1 }} className="bg-white p-4 rounded-lg shadow-md">
+          {/* <motion.div variants={{ opacity: 1 }} className="bg-white p-4 rounded-lg shadow-md">
             <div className="text-2xl sm:text-3xl font-bold text-green-600 mb-2">24/7</div>
             <div className="text-gray-600 text-sm sm:text-base">Support</div>
-          </motion.div>
+          </motion.div> */}
           <motion.div variants={{ opacity: 1 }} className="bg-white p-4 rounded-lg shadow-md">
             <div className="text-2xl sm:text-3xl font-bold text-indigo-600 mb-2">100%</div>
             <div className="text-gray-600 text-sm sm:text-base">Satisfaction</div>
