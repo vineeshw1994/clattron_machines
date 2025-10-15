@@ -4,6 +4,7 @@ import axios from 'axios';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Link, useNavigate } from 'react-router-dom';
 import { FiArrowLeft } from 'react-icons/fi';
+import Swal from 'sweetalert2';
 import { useSelector } from 'react-redux';
 const URL = import.meta.env.VITE_API_URL
 
@@ -43,6 +44,13 @@ export default function Categories() {
       const { data } = await axios.get(`${URL}/api/admin/categories`);
       setCategories(data);
     } catch (err) {
+      Swal.fire({
+        icon: 'error',
+        title: 'Error!',
+        text: 'Failed to load categories. Please refresh.',
+        timer: 3000,
+        showConfirmButton: false,
+      });
       console.error('Error fetching categories:', err);
     }
   };
@@ -51,14 +59,35 @@ export default function Categories() {
     try {
       if (editId) {
         await axios.put(`${URL}/api/admin/categories/${editId}`, data);
+        Swal.fire({
+          icon: 'success',
+          title: 'Success!',
+          text: 'Category updated successfully!',
+          timer: 2000,
+          showConfirmButton: false,
+        });
       } else {
         await axios.post(`${URL}/api/admin/categories`, data);
+        Swal.fire({
+          icon: 'success',
+          title: 'Success!',
+          text: 'Category created successfully!',
+          timer: 2000,
+          showConfirmButton: false,
+        });
       }
       fetchCategories();
       setIsModalOpen(false);
       setEditId(null);
       reset();
     } catch (err) {
+      Swal.fire({
+          icon: 'success',
+          title: 'Success!',
+          text: 'Category created successfully!',
+          timer: 2000,
+          showConfirmButton: false,
+        });
       console.error('Error saving category:', err);
     }
   };

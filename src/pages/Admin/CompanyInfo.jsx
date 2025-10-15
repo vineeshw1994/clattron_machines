@@ -6,6 +6,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { useDispatch, useSelector } from 'react-redux';
 import { FiCheckCircle, FiAlertCircle, FiArrowLeft, FiUpload, FiImage,  FiMapPin, FiPhone, FiMail, FiEdit3, FiVideo, FiPlayCircle } from 'react-icons/fi';
 import { BsBuildings } from "react-icons/bs";
+import Swal from 'sweetalert2'; // Import SweetAlert2
 import { fetchCompanyInfo, setCompany } from '../../store/slices/companySlice';
 const URL = import.meta.env.VITE_API_URL || 'http://localhost:5000';
 
@@ -66,7 +67,14 @@ export default function CompanyInfoPage() {
       setPreviewVideo(data.video ? `${URL}${data.video}` : null);
     } catch (err) {
       console.error(err);
-      setError('Failed to fetch company info. Please try again.');
+      Swal.fire({
+        icon: 'error',
+        title: 'Error!',
+        text: 'Failed to fetch company info. Please try again.',
+        timer: 3000,
+        showConfirmButton: false,
+      });
+      // setError('Failed to fetch company info. Please try again.');
     }
   };
 
@@ -74,6 +82,13 @@ export default function CompanyInfoPage() {
     const file = e.target.files[0];
     if (file && file.size > 5 * 1024 * 1024) { // 5MB limit
       setError('Logo size must be less than 5MB');
+      Swal.fire({
+        icon: 'warning',
+        title: 'File Too Large!',
+        text: 'Logo size must be less than 5MB',
+        timer: 3000,
+        showConfirmButton: false,
+      });
       return;
     }
     setError('');
@@ -84,7 +99,14 @@ export default function CompanyInfoPage() {
   const handleFaviconChange = (e) => {
     const file = e.target.files[0];
     if (file && file.size > 1 * 1024 * 1024) { // 1MB limit
-      setError('Favicon size must be less than 1MB');
+      Swal.fire({
+        icon: 'warning',
+        title: 'File Too Large!',
+        text: 'Favicon size must be less than 1MB',
+        timer: 3000,
+        showConfirmButton: false,
+      });
+      // setError('Favicon size must be less than 1MB');
       return;
     }
     setError('');
@@ -95,14 +117,28 @@ export default function CompanyInfoPage() {
   const handleVideoChange = (e) => {
     const file = e.target.files[0];
     if (file && file.size > 50 * 1024 * 1024) { // 50MB limit for video
-      setError('Video size must be less than 50MB');
+      // setError('Video size must be less than 50MB');
+      Swal.fire({
+        icon: 'warning',
+        title: 'File Too Large!',
+        text: 'Video size must be less than 50MB',
+        timer: 3000,
+        showConfirmButton: false,
+      });
       return;
     }
     if (file && !file.type.startsWith('video/')) {
-      setError('Please select a valid video file (MP4, WebM)');
+      Swal.fire({
+        icon: 'warning',
+        title: 'Invalid File!',
+        text: 'Please select a valid video file (MP4, WebM)',
+        timer: 3000,
+        showConfirmButton: false,
+      });
+      // setError('Please select a valid video file (MP4, WebM)');
       return;
     }
-    setError('');
+    // setError('');
     setVideo(file);
     setPreviewVideo(file ? URL.createObjectURL(file) : null);
   };
@@ -142,9 +178,16 @@ export default function CompanyInfoPage() {
       const response = await axios.put(`${URL}/api/admin/company-info`, formData, {
         headers: { 'Content-Type': 'multipart/form-data' },
       });
-      setSuccess('Company info updated successfully!');
+      // setSuccess('Company info updated successfully!');
       // Dispatch to Redux to update state
       dispatch(setCompany(response.data));
+      Swal.fire({
+        icon: 'success',
+        title: 'Success!',
+        text: 'Company info updated successfully!',
+        timer: 2000,
+        showConfirmButton: false,
+      });
       await fetchInfo(); // Refresh data
       setLogo(null);
       setFavicon(null);
@@ -155,7 +198,14 @@ export default function CompanyInfoPage() {
       setTimeout(() => setSuccess(''), 5000); // Auto-hide success
     } catch (err) {
       console.error(err);
-      setError(err.response?.data?.message || 'Failed to update company info. Please try again.');
+      Swal.fire({
+        icon: 'error',
+        title: 'Error!',
+        text: err.response?.data?.message || 'Failed to update company info. Please try again.',
+        timer: 3000,
+        showConfirmButton: false,
+      });
+      // setError(err.response?.data?.message || 'Failed to update company info. Please try again.');
     } finally {
       setIsLoading(false);
     }

@@ -3,8 +3,9 @@ import { Link, useNavigate, useParams } from 'react-router-dom';
 import { useForm, useFieldArray } from 'react-hook-form';
 import axios from 'axios';
 import { motion, AnimatePresence } from 'framer-motion';
-import { FiArrowLeft, FiAlertCircle } from 'react-icons/fi';
+import { FiArrowLeft, FiAlertCircle, FiCheckCircle } from 'react-icons/fi';
 import { useSelector } from 'react-redux';
+import Swal from 'sweetalert2';
 
 const URL = import.meta.env.VITE_API_URL || 'http://localhost:5000';
 
@@ -49,7 +50,14 @@ export default function ProductForm() {
       setCategories(data);
     } catch (err) {
       console.error('Error fetching categories:', err);
-      setError('Failed to load categories');
+      Swal.fire({
+        icon: 'error',
+        title: 'Error!',
+        text: 'Failed to load categories. Please refresh.',
+        timer: 3000,
+        showConfirmButton: false,
+      });
+      // setError('Failed to load categories');
     }
   };
 
@@ -66,7 +74,15 @@ export default function ProductForm() {
       setPreviewImage(data.image ? `${URL}${data.image}` : null);
     } catch (err) {
       console.error('Error fetching product:', err);
-      setError('Failed to load product');
+      Swal.fire({
+        icon: 'error',
+        title: 'Error!',
+        text: 'Failed to load product. Please try again.',
+        timer: 3000,
+        showConfirmButton: false,
+      });
+      // setError('Failed to load product');
+
     }
   };
 
@@ -98,9 +114,15 @@ export default function ProductForm() {
     setIsLoading(true);
 
     const formData = new FormData();
-    Object.entries(data).forEach(([key, value]) => {
-      if (value) formData.append(key, value);
-    });
+   Object.entries(data).forEach(([key, value]) => {
+  if (value) {
+ if (key === 'specs' && typeof value === 'object') {
+      formData.append(key, JSON.stringify(value));
+    } else {
+      formData.append(key, value);
+    }
+  }
+});
     if (image) formData.append('image', image);
 
     try {
@@ -108,9 +130,23 @@ export default function ProductForm() {
         await axios.put(`${URL}/api/admin/products/${id}`, formData, {
           headers: { 'Content-Type': 'multipart/form-data' }
         });
+        Swal.fire({
+          icon: 'success',
+          title: 'Success!',
+          text: 'Product updated successfully!',
+          timer: 2000,
+          showConfirmButton: false,
+        });
       } else {
         await axios.post(`${URL}/api/admin/products`, formData, {
           headers: { 'Content-Type': 'multipart/form-data' }
+        });
+        Swal.fire({
+          icon: 'success',
+          title: 'Success!',
+          text: 'Product created successfully!',
+          timer: 2000,
+          showConfirmButton: false,
         });
       }
       setSuccess(isEdit ? 'Product updated successfully!' : 'Product created successfully!');
@@ -119,7 +155,14 @@ export default function ProductForm() {
       }, 1500);
     } catch (err) {
       console.error('Error saving product:', err);
-      setError(err.response?.data?.message || 'Failed to save product. Please try again.');
+      Swal.fire({
+        icon: 'error',
+        title: 'Error!',
+        text: err.response?.data?.message || 'Failed to save product. Please try again.',
+        timer: 3000,
+        showConfirmButton: false,
+      });
+      // setError(err.response?.data?.message || 'Failed to save product. Please try again.');
     } finally {
       setIsLoading(false);
     }

@@ -4,6 +4,7 @@ import axios from 'axios';
 import { motion } from 'framer-motion';
 import { FiArrowLeft } from 'react-icons/fi';
 import { useSelector } from 'react-redux';
+import Swal from 'sweetalert2'; // Import SweetAlert2
 const URL = import.meta.env.VITE_API_URL
 
 
@@ -49,38 +50,97 @@ export default function Products() {
   };
 
   const handleDelete = async (id) => {
-    try {
-      await axios.delete(`${URL}/api/admin/products/${id}`);
-      fetchProducts();
-    } catch (err) {
-      console.error('Error deleting product:', err);
+    const result = await Swal.fire({
+      title: 'Are you sure?',
+      text: "You won't be able to revert this!",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Yes, delete it!',
+      cancelButtonText: 'Cancel',
+    });
+    if (result.isConfirmed) {
+      try {
+        await axios.delete(`${URL}/api/admin/products/${id}`);
+        await fetchProducts();
+        Swal.fire('Deleted!', 'Product has been deleted.', 'success');
+      } catch (err) {
+        console.error('Error deleting product:', err);
+        Swal.fire('Error!', 'Failed to delete product.', 'error');
+      }
     }
   };
 
   const handleToggleDisable = async (id, disabled) => {
-    try {
-      await axios.patch(`${URL}/api/admin/products/${id}/toggle-disable`, { disabled: !disabled });
-      fetchProducts();
-    } catch (err) {
-      console.error('Error toggling product status:', err);
+    const action = disabled ? 'enable' : 'disable';
+    const result = await Swal.fire({
+      title: `Confirm ${action}?`,
+      text: `Are you sure you want to ${action} this product?`,
+      icon: 'question',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: `Yes, ${action} it!`,
+      cancelButtonText: 'Cancel',
+    });
+    if (result.isConfirmed) {
+      try {
+        await axios.patch(`${URL}/api/admin/products/${id}/toggle-disable`, { disabled: !disabled });
+        await fetchProducts();
+        Swal.fire(`${action.charAt(0).toUpperCase() + action.slice(1)}d!`, `Product has been ${action}d.`, 'success');
+      } catch (err) {
+        console.error('Error toggling product status:', err);
+        Swal.fire('Error!', 'Failed to toggle status.', 'error');
+      }
     }
   };
 
-  const handleToggleFeatured = async (id, featured) => {
-    try {
-      await axios.patch(`${URL}/api/admin/products/${id}/toggle-featured`, { featured: !featured });
-      fetchProducts();
-    } catch (err) {
-      console.error('Error toggling product featured:', err);
+ const handleToggleFeatured = async (id, featured) => {
+    const action = featured ? 'unfeature' : 'feature';
+    const result = await Swal.fire({
+      title: `Confirm ${action}?`,
+      text: `Are you sure you want to ${action} this product?`,
+      icon: 'question',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: `Yes, ${action} it!`,
+      cancelButtonText: 'Cancel',
+    });
+    if (result.isConfirmed) {
+      try {
+        await axios.patch(`${URL}/api/admin/products/${id}/toggle-featured`, { featured: !featured });
+        await fetchProducts();
+        Swal.fire(`${action.charAt(0).toUpperCase() + action.slice(1)}d!`, `Product has been ${action}d.`, 'success');
+      } catch (err) {
+        console.error('Error toggling featured:', err);
+        Swal.fire('Error!', 'Failed to toggle featured.', 'error');
+      }
     }
   };
 
   const handleToggleExplored = async (id, explored) => {
-    try {
-      await axios.patch(`${URL}/api/admin/products/${id}/toggle-explored`, { explored: !explored });
-      fetchProducts();
-    } catch (err) {
-      console.error('Error toggling product featured:', err);
+    const action = explored ? 'unexplore' : 'explore';
+    const result = await Swal.fire({
+      title: `Confirm ${action}?`,
+      text: `Are you sure you want to ${action} this product?`,
+      icon: 'question',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: `Yes, ${action} it!`,
+      cancelButtonText: 'Cancel',
+    });
+    if (result.isConfirmed) {
+      try {
+        await axios.patch(`${URL}/api/admin/products/${id}/toggle-explored`, { explored: !explored });
+        await fetchProducts();
+        Swal.fire(`${action.charAt(0).toUpperCase() + action.slice(1)}d!`, `Product has been ${action}d.`, 'success');
+      } catch (err) {
+        console.error('Error toggling explored:', err);
+        Swal.fire('Error!', 'Failed to toggle explored.', 'error');
+      }
     }
   };
 

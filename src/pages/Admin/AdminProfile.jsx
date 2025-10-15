@@ -4,13 +4,14 @@ import { useForm } from 'react-hook-form';
 import axios from 'axios';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useDispatch, useSelector } from 'react-redux';
+import Swal from 'sweetalert2';
 import { FiCheckCircle, FiAlertCircle, FiArrowLeft, FiEdit3, FiUser, FiMail, FiPhone, FiLock, FiEye, FiEyeOff } from 'react-icons/fi';
 
 const URL = import.meta.env.VITE_API_URL || 'http://localhost:5000';
 
 export default function AdminProfilePage() {
   const { token, userInfo } = useSelector((state) => state.user);
-    const dispatch = useDispatch();
+  const dispatch = useDispatch();
   const navigate = useNavigate();
   const [error, setError] = useState('');
   const [success, setSuccess] = useState('');
@@ -46,7 +47,14 @@ export default function AdminProfilePage() {
       reset(data);
     } catch (err) {
       console.error(err);
-      setError('Failed to fetch profile. Please try again.');
+      // setError('Failed to fetch profile. Please try again.');
+      Swal.fire({
+        icon: 'error',
+        title: 'Error!',
+        text: 'Failed to fetch profile. Please try again.',
+        timer: 3000,
+        showConfirmButton: false,
+      });
     }
   };
 
@@ -59,7 +67,14 @@ export default function AdminProfilePage() {
       // Separate password update if new password is provided
       if (data.newPassword) {
         if (data.newPassword !== data.confirmNewPassword) {
-          setError('New passwords do not match');
+          // setError('New passwords do not match');
+          Swal.fire({
+            icon: 'warning',
+            title: 'Mismatch!',
+            text: 'New passwords do not match',
+            timer: 3000,
+            showConfirmButton: false,
+          });
           setIsLoading(false);
           return;
         }
@@ -74,7 +89,14 @@ export default function AdminProfilePage() {
           newPassword: '',
           confirmNewPassword: '',
         }));
-        setSuccess('Password updated successfully!');
+        // setSuccess('Password updated successfully!');
+        Swal.fire({
+          icon: 'success',
+          title: 'Success!',
+          text: 'Password updated successfully!',
+          timer: 2000,
+          showConfirmButton: false,
+        });
       }
 
       // Update profile info if changed
@@ -86,18 +108,29 @@ export default function AdminProfilePage() {
       };
 
       if (Object.values(updateData).some(val => val !== undefined)) {
-      const profileResponse =  await axios.put(`${URL}/api/admin/profile`, updateData);
+        const profileResponse = await axios.put(`${URL}/api/admin/profile`, updateData);
 
-        setSuccess('Profile updated successfully!');
+        Swal.fire({
+          icon: 'success',
+          title: 'Success!',
+          text: 'Profile updated successfully!',
+          timer: 2000,
+          showConfirmButton: false,
+        });
         // Update Redux with new profile data (excludes password)
-      dispatch(profileResponse.data);
-        await fetchProfile(); // Refresh data
+        await fetchProfile();
       }
 
-      setTimeout(() => setSuccess(''), 5000);
     } catch (err) {
       console.error(err);
-      setError(err.response?.data?.message || 'Failed to update profile. Please try again.');
+      Swal.fire({
+        icon: 'error',
+        title: 'Error!',
+        text: err.response?.data?.message || 'Failed to update profile. Please try again.',
+        timer: 3000,
+        showConfirmButton: false,
+      });
+      // setError(err.response?.data?.message || 'Failed to update profile. Please try again.');
     } finally {
       setIsLoading(false);
     }
@@ -132,21 +165,21 @@ export default function AdminProfilePage() {
       initial="hidden"
       animate="visible"
     >
-         {/* Breadcrumbs */}
-        <motion.nav className="flex items-center mb-4 text-sm" variants={itemVariants}>
-          <Link
-            to="/admin/dashboard"
-            className="flex items-center text-blue-600 hover:text-blue-800 transition-colors duration-200"
-            aria-label="Back to dashboard"
-          >
-            <FiArrowLeft className="mr-2" />
-            Dashboard
-          </Link>
-          <span className="mx-2 text-gray-400">/</span>
-          <span className="text-gray-700 font-medium">Profile</span>
-        </motion.nav>
+      {/* Breadcrumbs */}
+      <motion.nav className="flex items-center mb-4 text-sm" variants={itemVariants}>
+        <Link
+          to="/admin/dashboard"
+          className="flex items-center text-blue-600 hover:text-blue-800 transition-colors duration-200"
+          aria-label="Back to dashboard"
+        >
+          <FiArrowLeft className="mr-2" />
+          Dashboard
+        </Link>
+        <span className="mx-2 text-gray-400">/</span>
+        <span className="text-gray-700 font-medium">Profile</span>
+      </motion.nav>
       <div className="max-w-2xl mx-auto">
-     
+
 
         {/* Header */}
         <motion.div className="text-center mb-8" variants={itemVariants}>
