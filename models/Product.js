@@ -1,4 +1,4 @@
-// Updated Product Schema (src/models/Product.js or wherever it's defined)
+
 const mongoose = require('mongoose');
 
 const productSchema = new mongoose.Schema({

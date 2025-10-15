@@ -19,9 +19,9 @@ exports.login = async (req, res) => {
         sameSite: "strict",
       })
       .json({
-      token: result.token,
-      user: result.user, // This goes to thunk's data.user
-    });
+        token: result.token,
+        user: result.user, // This goes to thunk's data.user
+      });
   } catch (err) {
     res.status(401).json({ message: err.message });
   }
@@ -75,19 +75,35 @@ exports.deleteCategory = async (req, res) => {
   }
 };
 
+// CREATE PRODUCT
 exports.createProduct = async (req, res) => {
   try {
     const { name, description, category, specs } = req.body;
+
+    let parsedSpecs = {};
+    if (specs) {
+      const specsData = JSON.parse(specs);
+      if (Array.isArray(specsData)) {
+        specsData.forEach((item) => {
+          if (item.key && item.value) parsedSpecs[item.key] = item.value;
+        });
+      } else {
+        parsedSpecs = specsData;
+      }
+    }
+
     const product = new Product({
       name,
       description,
       category,
-      specs: JSON.parse(specs),
+      specs: parsedSpecs,
       image: req.file ? `/uploads/${req.file.filename}` : null,
     });
+
     await product.save();
     res.status(201).json(product);
   } catch (err) {
+    console.error("Error creating product:", err);
     res.status(400).json({ message: "Error creating product" });
   }
 };
@@ -125,7 +141,7 @@ exports.getExploredProducts = async (req, res) => {
   } catch (err) {
     console.error("Error fetching explored products:", err);
     res.status(500).json({ message: "Server error" });
-  } 
+  }
 };
 
 exports.getProducts = async (req, res) => {
@@ -161,34 +177,52 @@ exports.getProductById = async (req, res) => {
   }
 };
 
+// UPDATE PRODUCT
 exports.updateProduct = async (req, res) => {
   try {
     const { name, description, category, specs } = req.body;
     const product = await Product.findById(req.params.id);
+
     if (!product) return res.status(404).json({ message: "Product not found" });
 
-    // Delete old image if a new one is uploaded
+    // Delete old image if new one uploaded
     if (req.file && product.image) {
       const oldImagePath = path.join(__dirname, "..", product.image);
       try {
         await fs.unlink(oldImagePath);
       } catch (err) {
-        console.error("Error deleting old image:", err);
+        console.warn("Could not delete old image:", err.message);
       }
     }
 
-    product.name = name;
-    product.description = description;
-    product.category = category;
-    product.specs = JSON.parse(specs);
+    // Parse specs
+    let parsedSpecs = {};
+    if (specs) {
+      const specsData = JSON.parse(specs);
+      if (Array.isArray(specsData)) {
+        specsData.forEach((item) => {
+          if (item.key && item.value) parsedSpecs[item.key] = item.value;
+        });
+      } else {
+        parsedSpecs = specsData;
+      }
+    }
+
+    // Update fields
+    product.name = name || product.name;
+    product.description = description || product.description;
+    product.category = category || product.category;
+    product.specs = parsedSpecs;
     if (req.file) product.image = `/uploads/${req.file.filename}`;
 
     await product.save();
     res.json(product);
   } catch (err) {
+    console.error("Error updating product:", err);
     res.status(400).json({ message: "Error updating product" });
   }
 };
+
 
 exports.deleteProduct = async (req, res) => {
   try {
@@ -279,7 +313,6 @@ exports.toggleExplored = async (req, res) => {
   }
 };
 
-
 // Updated Controller (companyController.js)
 exports.updateCompanyInfo = async (req, res) => {
   try {
@@ -288,7 +321,8 @@ exports.updateCompanyInfo = async (req, res) => {
       companyInfo = new CompanyInfo({});
     }
 
-    const { name, address, city, state, zipcode, phone, email, about } = req.body;
+    const { name, address, city, state, zipcode, phone, email, about } =
+      req.body;
     console.log(req.body);
 
     // Delete old logo if new uploaded
@@ -330,9 +364,12 @@ exports.updateCompanyInfo = async (req, res) => {
     companyInfo.phone = phone || companyInfo.phone;
     companyInfo.email = email || companyInfo.email;
     companyInfo.about = about || companyInfo.about;
-    if (req.files.logo) companyInfo.logo = `/uploads/${req.files.logo[0].filename}`;
-    if (req.files.favicon) companyInfo.favicon = `/uploads/${req.files.favicon[0].filename}`;
-    if (req.files.video) companyInfo.video = `/uploads/${req.files.video[0].filename}`;
+    if (req.files.logo)
+      companyInfo.logo = `/uploads/${req.files.logo[0].filename}`;
+    if (req.files.favicon)
+      companyInfo.favicon = `/uploads/${req.files.favicon[0].filename}`;
+    if (req.files.video)
+      companyInfo.video = `/uploads/${req.files.video[0].filename}`;
 
     await companyInfo.save();
     res.json(companyInfo);
@@ -350,14 +387,14 @@ exports.getCompanyInfo = async (req, res) => {
   }
 };
 
-exports.getPublicCompanyInfo= async (req, res) => {
+exports.getPublicCompanyInfo = async (req, res) => {
   try {
-    const info = await CompanyInfo.findOne()
+    const info = await CompanyInfo.findOne();
     res.json(info || {});
   } catch (err) {
-    res.status(500).json({ message: 'Server error' });
+    res.status(500).json({ message: "Server error" });
   }
-}
+};
 
 // GET /api/admin/profile - Fetch admin profile
 exports.getProfile = async (req, res) => {
@@ -375,9 +412,10 @@ exports.getProfile = async (req, res) => {
 
 // PUT /api/admin/profile - Update profile info
 exports.updateProfile = async (req, res) => {
+  console.log('this is profile update function')
   try {
     const { name, email, mobile, username } = req.body;
-
+ console.log(req.body,'req body ')
     // Validate username uniqueness if provided
     if (username) {
       const existingAdmin = await Admin.findOne({
@@ -390,16 +428,17 @@ exports.updateProfile = async (req, res) => {
     }
 
     const updateData = { name, email, mobile, username };
+    console.log('nice to update')
     // Remove undefined fields
     Object.keys(updateData).forEach(
       (key) => updateData[key] === undefined && delete updateData[key]
     );
-
+console.log('final stage')
     const admin = await Admin.findByIdAndUpdate(req.user.id, updateData, {
       new: true,
       runValidators: true,
     }).select("-password");
-
+console.log('updated data')
     res.json(admin);
   } catch (err) {
     console.error(err);
@@ -444,7 +483,7 @@ exports.updatePassword = async (req, res) => {
   }
 };
 
-// get all customers 
+// get all customers
 exports.getAllCustomers = async (req, res) => {
   try {
     const customers = await Customer.find().sort({ createdAt: -1 });
