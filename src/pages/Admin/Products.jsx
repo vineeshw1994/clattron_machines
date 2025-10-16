@@ -153,7 +153,6 @@ export default function Products() {
     (currentPage - 1) * productsPerPage,
     currentPage * productsPerPage
   );
-
   // Framer Motion variants
   const containerVariants = {
     hidden: { opacity: 0, y: 20 },
@@ -313,7 +312,7 @@ export default function Products() {
                       <motion.tr key={prod._id} variants={itemVariants} whileHover="hover">
                         <td className="px-6 py-4 whitespace-nowrap">
                           {prod.image ? (
-                            <img src={`http://localhost:5000${prod.image}`} alt={prod.name} className="w-12 h-12 object-cover rounded" />
+                            <img src={`${URL}${prod?.image}`} alt={prod.name} className="w-12 h-12 object-cover rounded" />
                           ) : (
                             <span className="text-gray-500">No Image</span>
                           )}
