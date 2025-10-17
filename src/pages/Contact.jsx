@@ -159,11 +159,19 @@ const Contact = () => {
           <div className="space-y-4 text-gray-700">
             <p className="flex items-center gap-2">
               <i className="fas fa-envelope text-blue-900"></i>
-              Email: <a href="mailto:info@unicaremachines.com" className="text-blue-900 hover:text-yellow-400">{company?.email ? company.email : 'sales@clattron.com'}</a>
+              Email:{' '}
+              <a
+                href={`mailto:${company?.email || 'sales@clattron.com'}`}
+                className="text-blue-900 hover:text-yellow-400"
+              >
+                {company?.email || 'sales@clattron.com'}
+              </a>
             </p>
+
             <p className="flex items-center gap-2">
               <i className="fas fa-phone text-blue-900"></i>
-              Phone: <a href={`tel:${91}${company?.mobile?.replace(/[\s-]/g, '')}`} className="text-blue-900 hover:text-yellow-400">{company?.mobile ? company.mobile : '+91 9600444505'}</a>
+              Phone: <a href={`tel:+91${company.phone.replace(/[\s-]/g, '')}`}
+                  className="text-blue-900 hover:text-yellow-400">{company?.mobile ? company.mobile : '+91 9600444505'}</a>
             </p>
             <p className="flex items-center gap-2">
               <i className="fas fa-map-marker-alt text-blue-900"></i>
@@ -178,11 +186,14 @@ const Contact = () => {
               Support: <a href="mailto:support@unicaremachines.com" className="text-blue-900 hover:text-yellow-400">support@unicaremachines.com</a>
             </p> */}
             <a
-              href={`tel:${91}${company?.mobile?.replace(/[\s-]/g, '')}`}
+              href={`tel:+91${company.phone.replace(/[\s-]/g, '')}`}
+
               className="block mt-4 bg-yellow-400 text-blue-900 font-bold py-2 text-center rounded hover:bg-yellow-300 transition-colors"
             >
               Call Now
             </a>
+           
+
           </div>
         </motion.div>
       </div>
