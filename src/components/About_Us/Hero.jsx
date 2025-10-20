@@ -40,10 +40,10 @@ const Hero = () => {
           className="flex flex-col sm:flex-row gap-4 justify-start"
           variants={itemVariants}
         >
-          <motion.button onClick={contact} className="px-6 py-3 bg-purple-400 rounded-lg hover:bg-purple-700 transition-colors">
+          <motion.button onClick={contact} className="px-6 py-3 bg-red-600 rounded-lg hover:bg-red-800 transition-colors">
             Contact Us
           </motion.button>
-          <motion.button className="px-6 py-3 bg-transparent border-2 border-purple-600 rounded-lg text-purple-600 bg-dark hover:bg-white hover:text-indigo-900 transition-colors">
+          <motion.button className="px-6 py-3 bg-transparent border-2 border-white rounded-lg text-white bg-dark hover:bg-white hover:text-indigo-900 transition-colors">
             View Solutions
           </motion.button>
         </motion.div>

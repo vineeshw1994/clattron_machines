@@ -24,10 +24,10 @@ const ManufacturingPhilosophy = () => {
   };
 
   return (
-    <section className="py-20 px-4 sm:px-8 bg-purple-300">
+    <section className="py-20 px-4 sm:px-8 bg-blue">
       <div className="max-w-6xl mx-auto">
         <motion.h2
-          className="text-3xl sm:text-4xl font-bold mb-7 text-center lg:text-left py-8 text-black"
+          className="text-3xl sm:text-4xl font-bold mb-7 text-center lg:text-left py-8 text-white-smoke"
           variants={containerVariants}
           initial="hidden"
           whileInView="visible"
@@ -48,7 +48,7 @@ const ManufacturingPhilosophy = () => {
               className="bg-indigo-800 p-6 rounded-lg text-center lg:text-left hover:bg-indigo-700 transition-colors"
               variants={itemVariants}
             >
-              <card.icon className="text-4xl mb-4 mx-auto lg:ml-0 text-purple-300" />
+              <card.icon className="text-4xl mb-4 mx-auto lg:ml-0 text-white-smoke" />
               <h3 className="text-xl font-semibold mb-4 text-white">{card.title}</h3>
               <p className="text-gray-300 leading-relaxed">{card.desc}</p>
             </motion.div>

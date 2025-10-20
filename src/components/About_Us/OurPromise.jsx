@@ -1,12 +1,13 @@
 // components/OurPromise.jsx
 import React from 'react';
 import { motion } from 'framer-motion';
+import { FaHammer, FaShieldAlt, FaRocket } from 'react-icons/fa';
 
 const OurPromise = () => {
   const promises = [
-    { icon: '🔨', title: 'Build Good Equipment', desc: 'Machines that hold up under real production conditions.' },
-    { icon: '🛡️', title: 'Support It Properly', desc: 'Answer technical questions the same day you ask them.' },
-    { icon: '🚀', title: 'Show Up When Needed', desc: 'Be there when you need us, not just when it\'s convenient.' }
+    { icon: FaHammer, title: 'Build Good Equipment', desc: 'Machines that hold up under real production conditions.' },
+    { icon: FaShieldAlt, title: 'Support It Properly', desc: 'Answer technical questions the same day you ask them.' },
+    { icon: FaRocket, title: 'Show Up When Needed', desc: 'Be there when you need us, not just when it\'s convenient.' }
   ];
 
   const containerVariants = {
@@ -44,7 +45,7 @@ const OurPromise = () => {
               className={`flex-1 border border-white hover:opacity-5 p-6 rounded-lg relative `}
               variants={itemVariants}
             >
-              <div className="text-4xl mb-4">{promise.icon}</div>
+              <div className="text-4xl mb-4">{<promise.icon />}</div>
               <h3 className="text-xl font-semibold mb-4">{promise.title}</h3>
               <p className="text-gray-300">{promise.desc}</p>
             </motion.div>

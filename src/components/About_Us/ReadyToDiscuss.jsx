@@ -54,7 +54,7 @@ const ReadyToDiscuss = () => {
             <div className="flex flex-col sm:flex-row gap-3 sm:gap-4">
               <button 
                 onClick={contact} 
-                className="px-4 sm:px-6 py-2 sm:py-3 bg-purple-600 rounded-lg cursor-pointer hover:bg-purple-700 transition-colors text-white font-medium text-sm sm:text-base w-full sm:w-auto"
+                className="px-4 sm:px-6 py-2 sm:py-3 bg-red-600 rounded-lg cursor-pointer hover:bg-red-700 transition-colors text-white font-medium text-sm sm:text-base w-full sm:w-auto"
               >
                 Get in Touch
               </button>
