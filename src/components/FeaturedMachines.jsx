@@ -76,7 +76,7 @@ const FeaturedMachines = () => {
   return (
     <motion.section
       id="featured"
-      className="section machines py-12 sm:py-16 px-2 sm:px-4 lg:px-6 bg-gradient-to-b from-gray-50 via-blue-50 to-indigo-100 relative overflow-hidden"
+      className="section machines py-12 sm:py-16 px-2 sm:px-4 lg:px-6 bg-gradient-to-b from-gray-30 via-blue-400 to-indigo-300 relative overflow-hidden"
       variants={containerVariants}
       initial="hidden"
       whileInView="visible"
@@ -85,7 +85,7 @@ const FeaturedMachines = () => {
       <div className="max-w-7xl mx-auto relative z-10">
         {/* Header */}
         <motion.div
-          className="text-center mb-8 sm:mb-12"
+          className="text-center mb-8 sm:mb-12  "
           variants={titleVariants}
         >
           <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-gray-900 mb-3 sm:mb-4 tracking-tight">
@@ -127,13 +127,13 @@ const FeaturedMachines = () => {
             {featuredMachines?.map((machine) => (
               <SwiperSlide key={machine._id}>
                 <motion.div
-                  className="group cursor-pointer"
+                  className="group cursor-pointer  "
                   initial={false}
                   whileHover={{ y: -4 }}
                   transition={{ duration: 0.3 }}
                   onClick={() => navigate(`/machines/${machine._id}`)}
                 >
-                  <div className="bg-white rounded-xl overflow-hidden shadow-md hover:shadow-lg transition-shadow duration-300 border border-gray-100">
+                  <div className="bg-stone-200 rounded-xl overflow-hidden shadow-md hover:shadow-lg transition-shadow duration-300 border border-gray-100">
                     <div className="relative overflow-hidden">
                       <img
                         src={`${URL}${machine.image}`}
@@ -196,24 +196,7 @@ const FeaturedMachines = () => {
           </svg>
         </motion.button>
 
-        {/* Stats Footer – Responsive Grid */}
-        {/* <motion.div
-          className="mt-12 grid grid-cols-1 sm:grid-cols-3 gap-4 sm:gap-6 max-w-md sm:max-w-4xl mx-auto text-center"
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ staggerChildren: 0.2 }}
-        >
-          <motion.div variants={{ opacity: 1 }} className="bg-white p-4 rounded-lg shadow-md">
-            <div className="text-2xl sm:text-3xl font-bold text-blue-600 mb-2">{featuredMachines.length}</div>
-            <div className="text-gray-600 text-sm sm:text-base">Premium Machines</div>
-          </motion.div>
-         
-          <motion.div variants={{ opacity: 1 }} className="bg-white p-4 rounded-lg shadow-md">
-            <div className="text-2xl sm:text-3xl font-bold text-indigo-600 mb-2">100%</div>
-            <div className="text-gray-600 text-sm sm:text-base">Satisfaction</div>
-          </motion.div>
-        </motion.div> */}
+        
       </div>
     </motion.section>
   );

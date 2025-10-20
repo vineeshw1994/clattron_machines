@@ -146,7 +146,7 @@ const DetailedMachines = () => {
   return (
     <section
       id="detailed-machines"
-      className="section detailed-machines py-12 sm:py-16 px-4 bg-gray-50"
+      className="section detailed-machines py-12 sm:py-16 px-4 bg-gradient-to-b from-gray-200 via-blue-300 to-indigo-200 "
       role="region"
       aria-label="Explored machines"
     >
@@ -178,7 +178,7 @@ const DetailedMachines = () => {
                   <img
                     src={`${URL}${machine.image}`}
                     alt={machine.name}
-                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                    className="w-full h-full object-contain group-hover:scale-105 transition-transform duration-500"
                     loading="lazy"
                   />
                   {machine.featured && (
