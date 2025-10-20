@@ -4,7 +4,6 @@ import { useNavigate } from 'react-router-dom';
 import axios from 'axios';  // Assuming axios is installed and configured
 const URL = import.meta.env.VITE_API_URL
 
-
 const Machines = () => {
   const [machines, setMachines] = useState([]);
   const [categories, setCategories] = useState([]);
@@ -16,6 +15,14 @@ const Machines = () => {
     fetchCategories();
     fetchMachines();
   }, []);
+
+  // Scroll to machines section when category changes
+  useEffect(() => {
+    const machinesSection = document.getElementById('machines');
+    if (machinesSection) {
+      machinesSection.scrollIntoView({ behavior: 'smooth' });
+    }
+  }, [selectedCategory]);
 
   const fetchCategories = async () => {
     try {
@@ -118,7 +125,7 @@ const Machines = () => {
             <ul className="category-list space-y-2">
               <li key="all">
                 <a
-                  href="#"
+                  href="#machines"
                   className={`category-link block p-2 rounded ${selectedCategory === 'all' ? 'bg-yellow-400 text-blue-900' : 'text-blue-900 hover:bg-yellow-200'} transition-all duration-300`}
                   onClick={(e) => { e.preventDefault(); handleCategoryClick('all'); }}
                 >
@@ -128,7 +135,7 @@ const Machines = () => {
               {categories?.map((category) => (
                 <li key={category._id}>
                   <a
-                    href="#"
+                    href="#machines"
                     className={`category-link block p-2 rounded ${selectedCategory === category._id ? 'bg-yellow-400 text-blue-900' : 'text-blue-900 hover:bg-yellow-200'} transition-all duration-300`}
                     onClick={(e) => { e.preventDefault(); handleCategoryClick(category._id); }}
                   >
@@ -139,12 +146,12 @@ const Machines = () => {
             </ul>
           </aside>
           <div className="machines-list flex-1 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6" role="region" aria-label="Machine listings">
-            {filteredMachines.map((machine) => (
+            {filteredMachines.map((machine, index) => (
               <motion.div
                 key={machine._id}
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5, delay: machine._id * 0.1 }}  // Note: _id is string, so this delay might not stagger well—consider index-based if needed
+                transition={{ duration: 0.5, delay: index * 0.1 }}
                 className="machine-card bg-gray-200 rounded-lg overflow-hidden shadow-md hover:shadow-lg hover:-translate-y-2 transition-all duration-300 cursor-pointer"
                 onClick={() => handleViewDetails(machine._id)}
               >

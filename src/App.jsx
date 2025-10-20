@@ -19,6 +19,7 @@ import { useFaviconUpdater } from './hooks/useFaviconUpdater';
 import ProtectedRoute from './components/ProtectedRoute'; // Import ProtectedRoute
 import Profile from './pages/Admin/AdminProfile';
 import AdminCustomersPage from './pages/Admin/AdminCustomersPage';
+import About_Us from './pages/New_About';
 
 function Layout({ children }) {
   const { pathname } = useLocation();
@@ -41,10 +42,11 @@ export default function App() {
     <Routes>
       {/* Public Routes */}
       <Route path="/" element={<Layout><Home /></Layout>} />
-      <Route path="/about" element={<Layout><About /></Layout>} />
+      {/* <Route path="/about" element={<Layout><About /></Layout>} /> */}
       <Route path="/machines" element={<Layout><Machines /></Layout>} />
       <Route path="/machines/:id" element={<Layout><ProductView /></Layout>} />
       <Route path="/contact" element={<Layout><Contact /></Layout>} />
+      <Route path="/about" element={<Layout><About_Us /></Layout>} />
 
       {/* Admin Login Route (Public) */}
       <Route path="/admin/login" element={<Login />} />
