@@ -139,7 +139,7 @@ const Machines = () => {
                     className={`category-link block p-2 rounded ${selectedCategory === category._id ? 'bg-yellow-400 text-blue-900' : 'text-blue-900 hover:bg-yellow-200'} transition-all duration-300`}
                     onClick={(e) => { e.preventDefault(); handleCategoryClick(category._id); }}
                   >
-                    {category.name} Machines
+                    {category.name} 
                   </a>
                 </li>
               ))}

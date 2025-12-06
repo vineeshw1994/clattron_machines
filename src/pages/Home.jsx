@@ -9,6 +9,8 @@ import ContactTeaser from '../components/ContactTeaser';
 import Testimonials from '../components/Testimonials';
 import IndustrialApplications from '../components/IndustrialApplications';
 import machines from '../data/mahines.json';
+import ClattronHeroPoster from '../components/ClattronHeroPoster';
+import ClattronUnderConstruction from '../components/ClattronUnderConstruction';
 
 const Home = () => {
   const featuredMachines = machines.slice(0, 6); // Top 6 machines for carousel
@@ -16,6 +18,8 @@ const Home = () => {
 
   return (
     <div>
+      {/* <ClattronHeroPoster /> */}
+      <ClattronUnderConstruction />
       <Hero />
       <FeaturedMachines machines={featuredMachines} />
       <DetailedMachines machines={detailedMachines} />
